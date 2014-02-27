@@ -55,5 +55,3 @@ print "Scaffolds with Ns: ", numscaffoldwithN
 print "Num Ns: ", sumncount
 print "N50: ", n50
 print "N90: ", n90
-
-
