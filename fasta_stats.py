@@ -1,5 +1,4 @@
 #! /usr/bin/env python
-
 import sys
 from pbcore.io import FastaReader
 
