@@ -1,6 +1,7 @@
 #! /usr/bin/env python
 import argparse
 import subprocess
+import networkx
 
 class DeltaElement:
 	
@@ -82,6 +83,9 @@ def main():
 			aligned length percentage bigger than <length_threshold>",type=float,default=95.0)
 	parser.add_argument("-q", help="Quality threshold for correct alignments",type=float,default=95.0,)
 	parser.add_argument("-d","--delta", help="Use specified delta file instead of running mummer", type=str)
+	parser.add_argument("-s","--scaffolds-only", help="(AHA scaffolder only) Check only scaffolds that are\
+			composed from more than one contigs. An AHA graphML file with the scaffolding graph\
+			must be provided", type=str)
 			
 	args = parser.parse_args()
 	
@@ -95,13 +99,27 @@ def main():
 		
 	
 	keep_best(aligns,args.length_threshold)
-				
-	num_scaffolds = len(aligns)
+	
+	# if -s option is provided then create a list with the real scaffolds			
+	real_scaffolds = []
+	if args.scaffolds_only != None:
+		graph = networkx.read_graphml(args.scaffolds_only)
+
+		for node in graph.nodes_iter(True):
+        		comp_nodes = node[1]['compositionNodes'].split(',')
+        		if len(comp_nodes) > 1:
+                		real_scaffolds.append(node[0])
+
+
+	num_scaffolds = 0
 	count = 0
 	length = 0
 	max_length = 0
 	# count correct alignments
 	for scaf in aligns:
+		if args.scaffolds_only != None and scaf.name not in real_scaffolds:
+			continue
+		num_scaffolds = num_scaffolds + 1 
 		if len(scaf.alignments) > 0:
 			if scaf.alignments[0][6] >= args.q:
 				count = count + 1
@@ -123,10 +141,5 @@ def main():
 	print "Max correct length:", max_length
 	print "Avg correct length:", length/count
 	
-	#for scaf in aligns:
-	#	print scaf.name, scaf.length 
-	#	for align in scaf.alignments:
-	#		print align
-
 main()
 				

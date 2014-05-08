@@ -18,7 +18,7 @@ parser.add_argument(
 
 args = parser.parse_args()
 
-f = FastaReader(infile)
+f = FastaReader(args.infile)
 
 lenlist = [len(r.sequence) for r in f]
 
@@ -28,4 +28,4 @@ plt.xlabel('Read length (bp)')
 plt.savefig(args.outfile)
 
 
-args.infile.close()
+
