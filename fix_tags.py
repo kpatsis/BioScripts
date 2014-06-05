@@ -1,5 +1,6 @@
 import sys
 import random
+from subprocess import call
 
 f = open(sys.argv[1],'r')
 wf = open(sys.argv[1]+"_fixed",'w')
@@ -12,5 +13,11 @@ for l in f:
         wf.write(l)
     count = count + 1
 
+name = f.name
+tmp_name = wf.name
+
 f.close()
 wf.close()
+
+call(["rm",name)
+call(["mv",tmp_name,name)
