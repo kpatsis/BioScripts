@@ -34,15 +34,10 @@ minlen = lenlist[0]
 lenlist.reverse()
 maxlen = lenlist[0]
 
-# compute N50/90 based on genome size
-if sum_bp != -1:
-	sum_tmp = sum_bp
-else:
-	sum_tmp = sum
-
+# compute N(G)50/90
 for rl in lenlist:
     rsum = rsum + rl
-    if rsum > sum_tmp/2:
+    if rsum > sum/2:
         n50 = rl
         break
 
@@ -50,9 +45,28 @@ rsum = 0
 
 for rl in lenlist:
     rsum = rsum + rl
-    if rsum > sum_tmp*0.9:
+    if rsum > sum*0.9:
         n90 = rl
         break
+        
+if sum_bp != -1:        
+	rsum = 0
+
+	for rl in lenlist:
+		rsum = rsum + rl
+		if rsum > sum_bp/2:
+		    ng50 = rl
+		    break
+
+	rsum = 0
+
+	for rl in lenlist:
+		rsum = rsum + rl
+		if rsum > sum_bp*0.9:
+		    ng90 = rl
+		    break
+else:
+	ng50,ng90 = n50,n90
 
 print "Sum bp: ", sum
 print "Num scaffolds: ", len(lenlist)
@@ -64,3 +78,5 @@ print "Scaffolds with Ns: ", numscaffoldwithN
 print "Num Ns: ", sumncount
 print "N50: ", n50
 print "N90: ", n90
+print "NG50: ", ng50
+print "NG90: ", ng90
