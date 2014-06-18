@@ -13,11 +13,14 @@ lenlist = []
 more1k = 0
 sumncount = 0
 numscaffoldwithN = 0
+biggest100k = []
 
 for r in f:
 	l = len(r.sequence)
 	if l > 1000:
 		more1k = more1k + 1
+	if l > 100000:
+		biggest100k.append(r.name)
 	ncount = r.sequence.count('N')
 	sumncount = sumncount + ncount
 	if ncount != 0:
@@ -80,3 +83,7 @@ print "N50: ", n50
 print "N90: ", n90
 print "NG50: ", ng50
 print "NG90: ", ng90
+
+print "bigger than 100k:"
+for e in biggest100k:
+	print e
