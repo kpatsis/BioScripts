@@ -18,7 +18,7 @@ for sec in list:
 
 print len(max_seq)
 
-wf = f.open("human_chr14.fa","w")
+wf = open("human_chr14.fa","w")
 
 wf.write(max_seq)
 
