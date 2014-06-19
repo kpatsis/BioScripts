@@ -12,9 +12,9 @@ list = chr.sequence.split('N')
 max = 0
 max_seq = ""
 for sec in list:
-	if len(seq) > max:
-		max = len(seq)
-		max_seq = seq
+	if len(sec) > max:
+		max = len(sec)
+		max_seq = sec
 
-print len(seq)
+print len(max_seq)
 
