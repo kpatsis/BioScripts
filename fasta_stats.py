@@ -84,6 +84,6 @@ print "N90: ", n90
 print "NG50: ", ng50
 print "NG90: ", ng90
 
-print "bigger than 100k:"
-for e in biggest100k:
-	print e
+#print "bigger than 100k:"
+#for e in biggest100k:
+#	print e
